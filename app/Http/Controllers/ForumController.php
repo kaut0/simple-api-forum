@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Athorized;
+use App\Http\Resources\ForumResource;
 use App\Models\Forums;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +21,7 @@ class ForumController extends Controller
     public function index()
     {
         $user = $this->authorized();
-        return Forums::with('user:id,username', 'comments')->get();
+        return ForumResource::collection(Forums::with('user:id,username', 'forumsComments')->get());
     }
 
     public function store(Request $request)

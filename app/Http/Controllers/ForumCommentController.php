@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Athorized;
+use App\Http\Resources\ForumResource;
 use App\Models\ForumComments;
 use App\Models\Forums;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ class ForumCommentController extends Controller
 
     public function show($id)
     {
-        return Forums::with('user:id,username', 'forumsComments')->find($id);
+        return new ForumResource(Forums::with('user:id,username', 'forumsComments')->find($id));
     }
 
     public function store(Request $request, $forum_id)
