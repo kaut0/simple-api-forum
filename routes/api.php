@@ -11,7 +11,7 @@ Route::group(['middleware' => 'api'], function ($router) {
         Route::post('me', 'AuthController@me');
         Route::post('register', 'RegisterController@register');
     });
-
+    Route::get('forums/tag/{category}', 'ForumController@filter');
     Route::apiResource('forums', 'ForumController');
     Route::apiResource('forums.comments', 'ForumCommentController');
 });

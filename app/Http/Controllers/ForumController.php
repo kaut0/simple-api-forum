@@ -24,6 +24,14 @@ class ForumController extends Controller
         return ForumResource::collection(Forums::with('user:id,username', 'forumsComments')->get());
     }
 
+    public function filter($category)
+    {
+        $this->authorized();
+        return ForumResource::collection(
+            Forums::with('user:id,username', 'forumsComments')
+                ->where('category', $category)->get());
+    }
+
     public function store(Request $request)
     {
 
