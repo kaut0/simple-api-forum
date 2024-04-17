@@ -19,6 +19,7 @@ class CreateForumsTable extends Migration
             $table->string('slug');
             $table->string('body');
             $table->string('category');
+            $table->longText('image');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
 

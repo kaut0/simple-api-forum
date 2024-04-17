@@ -24,6 +24,17 @@ class ForumController extends Controller
         return ForumResource::collection(Forums::with('user:id,username', 'forumsComments')->get());
     }
 
+    public function getUserForum(){
+        $user = $this->authorized();
+        return ForumResource::collection(
+            Forums::where('user_id', $user->id)->get());
+    }
+
+    public function getForumById($id){
+        $this->authorized();
+        return Forums::find($id);
+    }
+
     public function filter($category)
     {
         $this->authorized();
@@ -42,12 +53,50 @@ class ForumController extends Controller
             'title' => request('title'),
             'body' => request('body'),
             'category' => request('category'),
+            'image'=>request('image'),
             'slug' => Str::slug(request('title'), '-') . '-' . time(),
         ]);
 
         return response()->json([
             'message' => 'berhasil',
         ], 201);
+    }
+
+    public function updateValue(Request $request){
+        $forum = Forums::find($request->id);
+
+        $this->getOwnerShip($forum->user_id);
+
+        $forum->update([
+            'title' => request('title'),
+            'body' => request('body'),
+            'category' => request('category'),
+            'image'=>request('image'),
+            'slug' => Str::slug(request('title'), '-') . '-' . time(),
+        ]);
+        return response()->json([
+            'message' => 'berhasil update data',
+        ],200);
+    }
+
+    public function updateData(Request $request, $id){
+        // $this->valid($request->all());
+
+        // $forum = Forums::find($id);
+
+        // $this->getOwnerShip($forum->user_id);
+
+        // $forum->update([
+        //     'title' => request('title'),
+        //     'body' => request('body'),
+        //     'category' => request('category'),
+        //     'image'=>request('image'),
+        //     'slug' => Str::slug(request('title'), '-') . '-' . time(),
+        // ]);
+
+        return response()->json([
+            'message' => 'berhasil update data',
+        ],200);
     }
 
     public function update(Request $request, $id)
@@ -62,12 +111,13 @@ class ForumController extends Controller
             'title' => request('title'),
             'body' => request('body'),
             'category' => request('category'),
+            'image'=>request('image'),
             'slug' => Str::slug(request('title'), '-') . '-' . time(),
         ]);
 
         return response()->json([
             'message' => 'berhasil update data',
-        ]);
+        ],200);
 
     }
 

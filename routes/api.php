@@ -13,6 +13,10 @@ Route::group(['middleware' => 'api'], function ($router) {
     });
     Route::get('users/@{username}', 'UserController@show');
     Route::get('forums/tag/{category}', 'ForumController@filter');
+    Route::get('myForums', 'ForumController@getUserForum');
+    Route::get('myForums/{id}', 'ForumController@getForumById');
+    Route::post('myForums/{id}', 'ForumController@updateData');
+    Route::post('updateForums', 'ForumController@updateValue');
     Route::apiResource('forums', 'ForumController');
     Route::apiResource('forums.comments', 'ForumCommentController');
 });
