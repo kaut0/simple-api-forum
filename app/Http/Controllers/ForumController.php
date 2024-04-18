@@ -31,8 +31,13 @@ class ForumController extends Controller
     }
 
     public function getForumById($id){
-        $this->authorized();
-        return Forums::find($id);
+        $user = $this->authorized();
+        $forum= Forums::find($id);
+       return response()->json([
+        'message' => 'berhasil update data',
+        'data'=>$forum,
+        'user'=>$user
+    ],200);
     }
 
     public function filter($category)
